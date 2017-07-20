@@ -58,6 +58,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   func observePopoverWindowSubject() {
     Broadcaster.register(PopoverWindowProvider.self, observer: self)
   }
+  
   public func on(windowVisible: Bool, frame: CGRect) {
     if windowVisible {
       
