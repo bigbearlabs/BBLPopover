@@ -37,7 +37,7 @@ extension PopoverWindowController: PopoverWindowProvider {
       self.show()
     }
     else {
-      self.hide()
+      self.close()
     }
   }
  
@@ -47,17 +47,26 @@ extension PopoverWindowController: PopoverWindowProvider {
 /// we tried stealing OverlayWindow's content view, which caused unwanted app activation when interacting (because the popover window was not a non-activating panel).
 open class PopoverWindowController: NSObject, NSPopoverDelegate {
   
+  public var visible: Bool = false {
+    didSet {
+      self.popover.window?.setIsVisible(self.visible)
+    }
+  }
+  
   let popover = NSPopover()
   let anchorView: NSView
   
   let contentWindowController: PopoverWindowSubject
   
+
+  lazy var initWindow: NSWindow! = {
+    return NSWindow(contentViewController: BlankViewController(frame: CGRect(x: 0, y: 0, width: 1, height: 1)))
+  }()
   
+
   public init(anchorView: NSView, contentWindowController: PopoverWindowSubject, appearance: NSAppearance? = nil) {
     self.anchorView = anchorView
     self.contentWindowController = contentWindowController
-    
-    //    self.contentWindowController.setupWindowForOverlay()
     
     super.init()
     
@@ -68,7 +77,18 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     }
     
     observePopoverWindowSubject()
+    
+    // show popover once in an invisible area of the screen to workaround the first-time layering bug.
+    initWindow.setFrameOrigin(CGPoint(x: 0, y: 0))
+    initWindow.orderFrontRegardless()
+    initWindow.level = CGWindowLevelForKey(CGWindowLevelKey.minimumWindow)
+    self.popover.contentViewController = BlankViewController(frame: CGRect(x:0, y:0, width:100, height:100))
+    self.popover.show(relativeTo: .zero, of: initWindow.contentView!, preferredEdge: .minY)
+        initWindow.orderOut(self)
+    
   }
+
+
   
   func observePopoverWindowSubject() {
     Broadcaster.register(PopoverWindowProvider.self, observer: self)
@@ -87,7 +107,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     updateContentWindowFrame()
   }
   
-  open func hide() {
+  open func close() {
     self.popover.close()
   }
   
@@ -98,10 +118,6 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   public func popoverDidShow(_ notification: Notification) {
     self.setupPopoverWindow()
     
-    self.popover.window?.orderFrontRegardless()
-    self.contentWindowController.window?.orderFrontRegardless()
-
-    updateContentWindowFrame()
   }
   
   func setupPopoverWindow() {
@@ -109,6 +125,12 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   }
   
   // MARK:
+  
+  public func updatePopoverWindowZOrder() {
+    if let contentWindow = self.contentWindowController.window, contentWindow.isVisible, self.popover.window?.isVisible ?? false {
+      self.popover.window?.order(.below, relativeTo: contentWindow.windowNumber)
+    }
+  }
   
   func updateContentWindowFrame() {
     // update content window frame to line up with the popover content view.
