@@ -81,7 +81,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     // show popover once in an invisible area of the screen to workaround the first-time layering bug.
     initWindow.setFrameOrigin(CGPoint(x: 0, y: 0))
     initWindow.orderFrontRegardless()
-    initWindow.level = CGWindowLevelForKey(CGWindowLevelKey.minimumWindow)
+    initWindow.level = Int(CGWindowLevelForKey(CGWindowLevelKey.minimumWindow))
     self.popover.contentViewController = BlankViewController(frame: CGRect(x:0, y:0, width:100, height:100))
     self.popover.show(relativeTo: .zero, of: initWindow.contentView!, preferredEdge: .minY)
         initWindow.orderOut(self)
