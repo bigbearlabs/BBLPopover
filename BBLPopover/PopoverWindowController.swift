@@ -117,7 +117,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   
   class BlankViewController: NSViewController {
     init(frame: CGRect) {
-      super.init(nibName: nil, bundle: nil)!
+      super.init(nibName: nil, bundle: nil)
       
       self.view = NSView(frame: frame)
     }
