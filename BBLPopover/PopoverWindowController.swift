@@ -75,11 +75,11 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   open func show(referenceFrame: CGRect) {
     
     // show the popover using the same size as the overlay.
-    self.popover.contentViewController = BlankViewController(frame: self.contentWindowController.window?.windowFrameView?.bounds ?? .zero)
-    self.popover.contentSize = self.contentWindowController.window!.frame.size
+    self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: referenceFrame.size))
+    self.popover.contentSize = referenceFrame.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
     
-    updateContentWindowFrame()
+    updateContentWindowFrame(frame: referenceFrame)
   }
   
   func hide() {
@@ -93,7 +93,8 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   public func popoverDidShow(_ notification: Notification) {
     self.setupPopoverWindow()
     
-    updateContentWindowFrame()
+    let popoverContentFrame = popover.window!.convertToScreen(popover.window!.contentView!.frame)
+    updateContentWindowFrame(frame: popoverContentFrame)
   }
   
   func setupPopoverWindow() {
@@ -102,11 +103,15 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   
   // MARK:
   
-  func updateContentWindowFrame() {
+  func updateContentWindowFrame(frame popoverContentFrame: CGRect) {
     // update content window frame to line up with the popover content view.
-    let contentWindow = self.contentWindowController.window!
-    let popoverContentView = self.popover.contentViewController!.view
-    if let popoverContentFrame = popoverContentView.window?.convertToScreen(popoverContentView.frame) {
+    guard let contentWindow = self.contentWindowController.window else {
+      return
+    }
+    let windowFrame = contentWindow.frame
+    if
+      let popoverContentView = self.popover.contentViewController?.view,
+      windowFrame != popoverContentFrame {
       contentWindow.setFrame(popoverContentFrame, display: true)
     }
     
