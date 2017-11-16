@@ -109,9 +109,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
       return
     }
     let windowFrame = contentWindow.frame
-    if
-      let popoverContentView = self.popover.contentViewController?.view,
-      windowFrame != popoverContentFrame {
+    if windowFrame != popoverContentFrame {
       contentWindow.setFrame(popoverContentFrame, display: true)
     }
     
