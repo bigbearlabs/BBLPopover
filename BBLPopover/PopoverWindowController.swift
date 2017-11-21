@@ -18,6 +18,7 @@ public protocol PopoverWindowSubject {
   @objc
   var window: NSWindow? { get }
   
+  func refresh(popoverFrame: NSRect)
 }
 
 
@@ -78,11 +79,12 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: referenceFrame.size))
     self.popover.contentSize = referenceFrame.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
+      // TODO find where  anchor view position is set and consolidate to here.
     
-    updateContentWindowFrame(frame: referenceFrame)
+    contentWindowController.refresh(popoverFrame: referenceFrame )
   }
   
-  func hide() {
+  open func hide() {
     self.popover.close()
   }
   
@@ -94,29 +96,15 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     self.setupPopoverWindow()
     
     let popoverContentFrame = popover.window!.convertToScreen(popover.window!.contentView!.frame)
-    updateContentWindowFrame(frame: popoverContentFrame)
+    contentWindowController.refresh(popoverFrame: popoverContentFrame)
   }
   
   func setupPopoverWindow() {
     self.popover.window?.delegate = self
   }
   
-  // MARK:
   
-  func updateContentWindowFrame(frame popoverContentFrame: CGRect) {
-    // update content window frame to line up with the popover content view.
-    guard let contentWindow = self.contentWindowController.window else {
-      return
-    }
-    let windowFrame = contentWindow.frame
-    if windowFrame != popoverContentFrame {
-      contentWindow.setFrame(popoverContentFrame, display: true)
-    }
-    
-    // since we started showing the overlay window on top of a popover, we have seen edge cases where the window doesn't display until something redraws the window.
-    // calling #display seems to force redraw and resolve the edge case.
-    contentWindow.display()
-  }
+  // MARK:
   
   class BlankViewController: NSViewController {
     init(frame: CGRect) {
