@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51BF91E41FC46A1A00941146 /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D51F1F20C0F3004255BC /* BBLBasics.framework */; };
 		51D5D4C11F20B6A4004255BC /* BBLPopover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; };
 		51D5D4C61F20B6A4004255BC /* BBLPopoverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */; };
 		51D5D4C81F20B6A4004255BC /* BBLPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D5D4BA1F20B6A4004255BC /* BBLPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51D5D4FE1F20BD00004255BC /* PopoverWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */; };
-		51D5D51E1F20C0E4004255BC /* SwiftNotificationCenterMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D51D1F20C0E4004255BC /* SwiftNotificationCenterMac.framework */; };
-		51D5D5201F20C0F3004255BC /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D51F1F20C0F3004255BC /* BBLBasics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51D5D5201F20C0F3004255BC /* BBLBasics.framework in Frameworks */,
-				51D5D51E1F20C0E4004255BC /* SwiftNotificationCenterMac.framework in Frameworks */,
+				51BF91E41FC46A1A00941146 /* BBLBasics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
