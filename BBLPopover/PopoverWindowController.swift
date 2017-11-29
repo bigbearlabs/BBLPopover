@@ -22,16 +22,6 @@ public protocol PopoverWindowSubject {
 }
 
 
-public protocol PopoverWindowProvider {
-  
-  func
-    on(windowVisible: Bool, frame: CGRect)
-  
-}
-
-extension PopoverWindowController: PopoverWindowProvider {
-  
-}
 
 /// we convolutedly synchronise popover behaviour to the window controller.
 /// we tried stealing OverlayWindow's content view, which caused unwanted app activation when interacting (because the popover window was not a non-activating panel).
@@ -52,16 +42,10 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     super.init()
     
     self.popover.delegate = self
-    
-    observePopoverWindowSubject()
   }
   
-  func observePopoverWindowSubject() {
-    Broadcaster.register(PopoverWindowProvider.self, observer: self)
-  }
-  
-  public func on(windowVisible: Bool, frame: CGRect) {
-    if windowVisible {
+  open func refresh(visible: Bool, frame: NSRect) {
+    if visible {
       
       self.show(referenceFrame: frame)
     }
