@@ -13,12 +13,12 @@ import BBLBasics
 
 
 @objc
-public protocol PopoverWindowSubject {
+public protocol PopoverContentProvider {
   
   @objc
   var window: NSWindow? { get }
   
-  func refresh(popoverFrame: NSRect)
+  func refresh(popoverContentFrame: NSRect)
 }
 
 
@@ -30,12 +30,19 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   let popover = NSPopover()
   let anchorView: NSView
   
-  let contentWindowController: PopoverWindowSubject
+  let popoverContentProvider: PopoverContentProvider
   
   
-  public init(anchorView: NSView, contentWindowController: PopoverWindowSubject) {
+  /// the content frame, in screen coordinates.
+  public var popoverContentFrame: CGRect? {
+    return popover.window?.convertToScreen(
+      (popover.contentViewController?.view.frame)!
+    )
+  }
+  
+  public init(anchorView: NSView, contentWindowController: PopoverContentProvider) {
     self.anchorView = anchorView
-    self.contentWindowController = contentWindowController
+    self.popoverContentProvider = contentWindowController
     
     //    self.contentWindowController.setupWindowForOverlay()
     
@@ -44,28 +51,18 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     self.popover.delegate = self
   }
   
-  open func refresh(visible: Bool, frame: NSRect) {
-    if visible {
-      
-      self.show(referenceFrame: frame)
-    }
-    else {
-      self.hide()
-    }
-  }
-  
   
   // MARK: - visibility
   
-  open func show(referenceFrame: CGRect) {
+  open func show(popoverContentRect: CGRect) {
     
     // show the popover using the same size as the overlay.
-    self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: referenceFrame.size))
-    self.popover.contentSize = referenceFrame.size
+    self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
+    self.popover.contentSize = popoverContentRect.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
       // TODO find where  anchor view position is set and consolidate to here.
     
-    contentWindowController.refresh(popoverFrame: referenceFrame )
+    popoverContentProvider.refresh(popoverContentFrame: popoverContentRect )
   }
   
   open func hide() {
@@ -73,14 +70,17 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   }
   
   
-  // MARK:
-  // MARK: popover delegate
+  // MARK: - popover delegate
   
   public func popoverDidShow(_ notification: Notification) {
     self.setupPopoverWindow()
     
-    let popoverContentFrame = popover.window!.convertToScreen(popover.window!.contentView!.frame)
-    contentWindowController.refresh(popoverFrame: popoverContentFrame)
+    // give the popover size some room to settle.
+    execOnMainAsync {
+      let popoverContentFrame = self.popover.window!.convertToScreen(self.popover.window!.contentView!.frame)
+      self.popoverContentProvider.refresh(popoverContentFrame: popoverContentFrame)
+    }
+    
   }
   
   func setupPopoverWindow() {
@@ -111,7 +111,7 @@ extension PopoverWindowController: NSWindowDelegate {
   // prevent the popover window from coming above the overlay window.
   public func windowDidBecomeKey(_ notification: Notification) {
     print("\(self): handing over key status to the content wc.")
-    self.contentWindowController.window?.makeKeyAndOrderFront(self)
+    self.popoverContentProvider.window?.makeKeyAndOrderFront(self)
   }
   
 }
