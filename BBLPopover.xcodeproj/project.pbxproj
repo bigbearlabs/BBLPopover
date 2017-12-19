@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		51BF91E41FC46A1A00941146 /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D51F1F20C0F3004255BC /* BBLBasics.framework */; };
 		51D5D4C11F20B6A4004255BC /* BBLPopover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; };
 		51D5D4C61F20B6A4004255BC /* BBLPopoverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */; };
 		51D5D4C81F20B6A4004255BC /* BBLPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D5D4BA1F20B6A4004255BC /* BBLPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51D5D4FE1F20BD00004255BC /* PopoverWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */; };
+		51FA5F5A1FD94FA5009EC3F6 /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,11 +31,8 @@
 		51D5D4C01F20B6A4004255BC /* BBLPopoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBLPopoverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBLPopoverTests.swift; sourceTree = "<group>"; };
 		51D5D4C71F20B6A4004255BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		51D5D4FB1F20B6C1004255BC /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverWindowController.swift; sourceTree = "<group>"; };
-		51D5D5071F20BDAF004255BC /* SwiftNotificationCenterMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftNotificationCenterMac.framework; path = ../Carthage/Build/Mac/SwiftNotificationCenterMac.framework; sourceTree = "<group>"; };
-		51D5D51D1F20C0E4004255BC /* SwiftNotificationCenterMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftNotificationCenterMac.framework; path = Carthage/Build/Mac/SwiftNotificationCenterMac.framework; sourceTree = "<group>"; };
-		51D5D51F1F20C0F3004255BC /* BBLBasics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BBLBasics.framework; path = "../../../../../../../Volumes/ramdisk/DerivedData/contexter-diussbvhwfomebclgpkcecfnrgtm/Build/Products/Debug/BBLBasics.framework"; sourceTree = "<group>"; };
+		51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BBLBasics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51BF91E41FC46A1A00941146 /* BBLBasics.framework in Frameworks */,
+				51FA5F5A1FD94FA5009EC3F6 /* BBLBasics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,10 +96,7 @@
 		51D5D4FA1F20B6C0004255BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				51D5D51F1F20C0F3004255BC /* BBLBasics.framework */,
-				51D5D51D1F20C0E4004255BC /* SwiftNotificationCenterMac.framework */,
-				51D5D5071F20BDAF004255BC /* SwiftNotificationCenterMac.framework */,
-				51D5D4FB1F20B6C1004255BC /* NotificationCenter.framework */,
+				51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
