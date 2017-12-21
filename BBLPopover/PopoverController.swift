@@ -23,15 +23,21 @@ public protocol PopoverContentProvider {
 
 
 
-/// we convolutedly synchronise popover behaviour to the window controller.
+/// we convolutedly synchronise popover behaviour to a content window controller.
 /// we tried stealing OverlayWindow's content view, which caused unwanted app activation when interacting (because the popover window was not a non-activating panel).
-open class PopoverWindowController: NSObject, NSPopoverDelegate {
+open class PopoverController: NSObject, NSPopoverDelegate {
   
   let popover = NSPopover()
+
+  
   let anchorView: NSView
   
+  @objc dynamic
   let popoverContentProvider: PopoverContentProvider
   
+  
+  var contentWindowVisibilityObservation: NSKeyValueObservation?
+
   
   /// the content frame, in screen coordinates.
   public var popoverContentFrame: CGRect? {
@@ -45,12 +51,27 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     self.popoverContentProvider = contentWindowController
     
     //    self.contentWindowController.setupWindowForOverlay()
-    
     super.init()
     
     self.popover.delegate = self
+    
+    observeContentWindowVisible()
   }
   
+  func observeContentWindowVisible() {
+    contentWindowVisibilityObservation = observe(\.popoverContentProvider.window?.isVisible, options: [.initial, .new]) { (object, change) in
+      if let contentVisible = change.newValue {
+        switch (contentVisible, self.popover.isShown)  {
+        case (true?, false):
+          self.show(popoverContentRect: self.popoverContentProvider.window!.frame)
+        case (false?, true):
+          self.hide()
+        default:
+          ()
+        }
+      }
+    }
+  }
   
   // MARK: - visibility
   
@@ -60,9 +81,8 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
     self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
     self.popover.contentSize = popoverContentRect.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
-      // TODO find where  anchor view position is set and consolidate to here.
     
-    popoverContentProvider.refresh(popoverContentFrame: popoverContentRect )
+//    popoverContentProvider.refresh(popoverContentFrame: popoverContentRect )
   }
   
   open func hide() {
@@ -73,6 +93,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
   // MARK: - popover delegate
   
   public func popoverDidShow(_ notification: Notification) {
+    // this is the first change to set up the popover's window.
     self.setupPopoverWindow()
     
     // give the popover size some room to settle.
@@ -106,7 +127,7 @@ open class PopoverWindowController: NSObject, NSPopoverDelegate {
 
 
 
-extension PopoverWindowController: NSWindowDelegate {
+extension PopoverController: NSWindowDelegate {
   
   // prevent the popover window from coming above the overlay window.
   public func windowDidBecomeKey(_ notification: Notification) {

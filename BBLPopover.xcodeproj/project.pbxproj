@@ -10,7 +10,7 @@
 		51D5D4C11F20B6A4004255BC /* BBLPopover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; };
 		51D5D4C61F20B6A4004255BC /* BBLPopoverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */; };
 		51D5D4C81F20B6A4004255BC /* BBLPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D5D4BA1F20B6A4004255BC /* BBLPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		51D5D4FE1F20BD00004255BC /* PopoverWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */; };
+		51D5D4FE1F20BD00004255BC /* PopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4FD1F20BD00004255BC /* PopoverController.swift */; };
 		51FA5F5A1FD94FA5009EC3F6 /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +31,7 @@
 		51D5D4C01F20B6A4004255BC /* BBLPopoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBLPopoverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBLPopoverTests.swift; sourceTree = "<group>"; };
 		51D5D4C71F20B6A4004255BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverWindowController.swift; sourceTree = "<group>"; };
+		51D5D4FD1F20BD00004255BC /* PopoverController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverController.swift; sourceTree = "<group>"; };
 		51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BBLBasics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -79,7 +79,7 @@
 			children = (
 				51D5D4BA1F20B6A4004255BC /* BBLPopover.h */,
 				51D5D4BB1F20B6A4004255BC /* Info.plist */,
-				51D5D4FD1F20BD00004255BC /* PopoverWindowController.swift */,
+				51D5D4FD1F20BD00004255BC /* PopoverController.swift */,
 			);
 			path = BBLPopover;
 			sourceTree = "<group>";
@@ -214,7 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51D5D4FE1F20BD00004255BC /* PopoverWindowController.swift in Sources */,
+				51D5D4FE1F20BD00004255BC /* PopoverController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
