@@ -18,7 +18,7 @@ public protocol PopoverContentProvider {
   @objc
   var window: NSWindow? { get }
   
-  func refresh(popoverContentFrame: NSRect)
+  func refresh(contentFrame: NSRect)
 }
 
 
@@ -99,7 +99,7 @@ open class PopoverController: NSObject, NSPopoverDelegate {
     // give the popover size some room to settle.
     execOnMainAsync {
       let popoverContentFrame = self.popover.window!.convertToScreen(self.popover.window!.contentView!.frame)
-      self.popoverContentProvider.refresh(popoverContentFrame: popoverContentFrame)
+      self.popoverContentProvider.refresh(contentFrame: popoverContentFrame)
     }
     
   }
