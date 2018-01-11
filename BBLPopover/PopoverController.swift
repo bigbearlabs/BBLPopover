@@ -126,6 +126,12 @@ open class PopoverController: NSObject, NSPopoverDelegate {
   
   func setupPopoverWindow() {
     self.popover.window?.delegate = self
+    
+    if let contentWindow = popoverContentProvider.window,
+      let display = self.popover.window?.isVisible {
+      
+      self.popover.window?.setFrame(contentWindow.frame, display: display)
+    }
   }
   
   
