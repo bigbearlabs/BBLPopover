@@ -56,6 +56,9 @@ open class PopoverController: NSObject, NSPopoverDelegate {
     self.popover.delegate = self
     
     observeContentWindowVisible()
+    
+    observeContentWindowFrame()
+    
   }
   
   func observeContentWindowVisible() {
@@ -72,6 +75,23 @@ open class PopoverController: NSObject, NSPopoverDelegate {
       }
     }
   }
+  
+  func observeContentWindowFrame() {
+    contentWindowFrameObservation = observe(\.popoverContentProvider.window?.frame, options: [.initial, .new]) { object, change in
+      // condition: popover visible.
+      if let value = change.newValue,
+        let contentWindowFrame = value,
+        let display = self.popover.window?.isVisible {
+        
+        // response: update popover frame to match content window position.
+        self.popover.window?.setFrame(contentWindowFrame, display: display)
+      }
+    }
+    
+    // enhancement: tracking can be choppy. before releasing, consider reimplementing by making the popover's topmost parent window be a child of the content window. (setup may be tricky / brittle over window lifecycles)
+    // deferring until we're sure of the priority of this.
+  }
+  var contentWindowFrameObservation: NSKeyValueObservation!
   
   // MARK: - visibility
   
