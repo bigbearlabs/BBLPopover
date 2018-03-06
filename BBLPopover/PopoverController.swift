@@ -25,7 +25,7 @@ public protocol PopoverContentProvider {
 
 /// we convolutedly synchronise popover behaviour to a content window controller.
 /// we tried stealing OverlayWindow's content view, which caused unwanted app activation when interacting (because the popover window was not a non-activating panel).
-open class PopoverController: NSObject, NSPopoverDelegate {
+open class PopoverController: NSObject {
   
   let popover = NSPopover()
 
@@ -50,7 +50,7 @@ open class PopoverController: NSObject, NSPopoverDelegate {
     self.anchorView = anchorView
     self.popoverContentProvider = contentWindowController
     
-    //    self.contentWindowController.setupWindowForOverlay()
+    
     super.init()
     
     self.popover.delegate = self
@@ -101,25 +101,28 @@ open class PopoverController: NSObject, NSPopoverDelegate {
     self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
     self.popover.contentSize = popoverContentRect.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
-    
-//    popoverContentProvider.refresh(popoverContentFrame: popoverContentRect )
   }
   
   open func hide() {
     self.popover.close()
   }
-  
-  
-  // MARK: - popover delegate
+}
+
+
+// MARK: - popover delegate
+
+extension PopoverController: NSPopoverDelegate {
   
   public func popoverDidShow(_ notification: Notification) {
-    // this is the first change to set up the popover's window.
+    
+    // this is the first chance to set up the popover's window, as previously it might not have been instantiated.
     self.setupPopoverWindow()
+    
+    // * update content provider frame to match popover.
     
     // give the popover size some room to settle.
     execOnMainAsync {
-      let popoverContentFrame = self.popover.window!.convertToScreen(self.popover.window!.contentView!.frame)
-      self.popoverContentProvider.refresh(contentFrame: popoverContentFrame)
+      self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!)
     }
     
   }
@@ -127,11 +130,6 @@ open class PopoverController: NSObject, NSPopoverDelegate {
   func setupPopoverWindow() {
     self.popover.window?.delegate = self
     
-    if let contentWindow = popoverContentProvider.window,
-      let display = self.popover.window?.isVisible {
-      
-      self.popover.window?.setFrame(contentWindow.frame, display: display)
-    }
   }
   
   
@@ -152,6 +150,7 @@ open class PopoverController: NSObject, NSPopoverDelegate {
 }
 
 
+// MARK: - NSWindowDelegate
 
 extension PopoverController: NSWindowDelegate {
   
