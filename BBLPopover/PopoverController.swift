@@ -38,6 +38,17 @@ open class PopoverController: NSObject {
   
   var contentWindowVisibilityObservation: NSKeyValueObservation?
 
+  open lazy var popoverWindow: NSWindow! = {
+    if let window = self.popover.window {
+      return window
+    }
+    
+    // for first-time access, zero the content rect.
+    self.show(popoverContentRect: .zero)
+
+    return popover.window!
+  }()
+  
   
   /// the content frame, in screen coordinates.
   public var popoverContentFrame: CGRect? {
@@ -123,6 +134,10 @@ extension PopoverController: NSPopoverDelegate {
     // give the popover size some room to settle.
     execOnMainAsync {
       self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!)
+      
+      // make popover winow a child of the content provider's window.
+      self.popoverWindow.addChildWindow(self.popoverContentProvider.window!, ordered: .above)
+      
     }
     
   }
