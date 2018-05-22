@@ -18,7 +18,7 @@ public protocol PopoverContentProvider {
   @objc
   var window: NSWindow? { get }
   
-  func refresh(contentFrame: NSRect)
+  func refresh(contentFrame: NSRect, display: Bool)
 }
 
 
@@ -27,17 +27,12 @@ public protocol PopoverContentProvider {
 /// we tried stealing OverlayWindow's content view, which caused unwanted app activation when interacting (because the popover window was not a non-activating panel).
 open class PopoverController: NSObject {
   
-  let popover = NSPopover()
-
-  
   let anchorView: NSView
   
   @objc dynamic
   let popoverContentProvider: PopoverContentProvider
   
   
-  var contentWindowVisibilityObservation: NSKeyValueObservation?
-
   open lazy var popoverWindow: NSWindow! = {
     if let window = self.popover.window {
       return window
@@ -66,25 +61,8 @@ open class PopoverController: NSObject {
     
     self.popover.delegate = self
     
-    observeContentWindowVisible()
-    
     observeContentWindowFrame()
     
-  }
-  
-  func observeContentWindowVisible() {
-    contentWindowVisibilityObservation = observe(\.popoverContentProvider.window?.isVisible, options: [.initial, .new]) { (object, change) in
-      if let contentVisible = change.newValue {
-        switch (contentVisible, self.popover.isShown)  {
-        case (true?, false):
-          self.show(popoverContentRect: self.popoverContentProvider.window!.frame)
-        case (false?, true):
-          self.hide()
-        default:
-          ()
-        }
-      }
-    }
   }
   
   func observeContentWindowFrame() {
@@ -104,8 +82,10 @@ open class PopoverController: NSObject {
   }
   var contentWindowFrameObservation: NSKeyValueObservation!
   
-  // MARK: - visibility
   
+  // MARK: - presentation
+  
+  // REFACTOR only a size is used.
   open func show(popoverContentRect: CGRect) {
     
     // show the popover using the same size as the overlay.
@@ -117,6 +97,12 @@ open class PopoverController: NSObject {
   open func hide() {
     self.popover.close()
   }
+  
+  
+  // MARK: - internals
+  
+  let popover = NSPopover()
+  
 }
 
 
@@ -133,13 +119,17 @@ extension PopoverController: NSPopoverDelegate {
     
     // give the popover size some room to settle.
     execOnMainAsync {
-      self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!)
+      self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!, display: true)
       
-      // make popover winow a child of the content provider's window.
+      // make popover window a child of the content provider's window.
       self.popoverWindow.addChildWindow(self.popoverContentProvider.window!, ordered: .above)
       
     }
     
+  }
+  
+  public func popoverDidClose(_ notification: Notification) {
+    self.popoverContentProvider.refresh(contentFrame: popoverWindow.frame, display: false)
   }
   
   func setupPopoverWindow() {
@@ -148,7 +138,7 @@ extension PopoverController: NSPopoverDelegate {
   }
   
   
-  // MARK:
+  // MARK: -
   
   class BlankViewController: NSViewController {
     init(frame: CGRect) {
