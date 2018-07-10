@@ -111,6 +111,9 @@ extension PopoverController: NSPopoverDelegate {
   
   public func popoverDidShow(_ notification: Notification) {
     
+    // DEV hide the popover, it's annoying when debugging.
+    self.popoverWindow.setIsVisible(false)
+    
     // this is the first chance to set up the popover's window, as previously it might not have been instantiated.
     self.setupPopoverWindow()
     
