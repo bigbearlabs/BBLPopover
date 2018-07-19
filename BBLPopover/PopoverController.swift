@@ -91,6 +91,12 @@ open class PopoverController: NSObject {
     self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
     self.popover.contentSize = popoverContentRect.size
     self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
+    
+    // case: when popover content already shown, influence the key window state.
+    if let contentWindow = self.popoverContentProvider.window,
+      contentWindow.isVisible {
+      contentWindow.makeKeyAndOrderFront(self)
+    }
   }
   
   open func hide() {
