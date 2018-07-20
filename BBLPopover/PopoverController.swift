@@ -117,9 +117,6 @@ extension PopoverController: NSPopoverDelegate {
   
   public func popoverDidShow(_ notification: Notification) {
     
-    // DEV hide the popover, it's annoying when debugging.
-    self.popoverWindow.setIsVisible(false)
-    
     // this is the first chance to set up the popover's window, as previously it might not have been instantiated.
     self.setupPopoverWindow()
     
@@ -127,6 +124,12 @@ extension PopoverController: NSPopoverDelegate {
     
     // give the popover size some room to settle.
     execOnMainAsync {
+      
+      // DEV prevent the popover from obscuring the screen when breakpoint is hit.
+      if UserDefaults.standard.bool(forKey: "debug.devInfo") == true {
+        self.popoverWindow.level = NSWindow.Level.normal
+      }
+
       self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!, display: true)
       
       // make popover window a child of the content provider's window.
