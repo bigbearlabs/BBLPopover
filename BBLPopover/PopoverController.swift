@@ -1,11 +1,3 @@
-//
-//  PopoverWindowController.swift
-//  contexter
-//
-//  Created by ilo on 01/06/2017.
-//  Copyright © 2017 Big Bear Labs. All rights reserved.
-//
-
 import Foundation
 import BBLBasics
 
@@ -28,19 +20,22 @@ open class PopoverController: NSObject {
   
   let anchorView: NSView
   
+  @objc dynamic weak
+  var popoverContentProvider: PopoverContentProvider!
+
+  
+  let popover = NSPopover()
+  
   @objc dynamic
-  let popoverContentProvider: PopoverContentProvider
-  
-  
-  open lazy var popoverWindow: NSWindow! = {
+  open lazy var popoverWindow: NSWindow = {
     if let window = self.popover.window {
       return window
     }
-    
-    // for first-time access, zero the content rect.
+
+    // for first-time access, show with a zero content rect to initialise popover.window.
     self.show(popoverContentRect: .zero)
 
-    return popover.window!
+    return self.popover.window!
   }()
   
   
@@ -51,35 +46,15 @@ open class PopoverController: NSObject {
     )
   }
   
-  public init(anchorView: NSView, contentWindowController: PopoverContentProvider) {
+  public init(anchorView: NSView, popoverContentProvider: PopoverContentProvider) {
     self.anchorView = anchorView
-    self.popoverContentProvider = contentWindowController
-    
+    self.popoverContentProvider = popoverContentProvider
     
     super.init()
     
     self.popover.delegate = self
-    
-    observeContentWindowFrame()
-    
   }
   
-  func observeContentWindowFrame() {
-    contentWindowFrameObservation = observe(\.popoverContentProvider.window?.frame, options: [.initial, .new]) { object, change in
-      // condition: popover visible.
-      if let value = change.newValue,
-        let contentWindowFrame = value,
-        let display = self.popover.window?.isVisible {
-        
-        // response: update popover frame to match content window position.
-        self.popover.window?.setFrame(contentWindowFrame, display: display)
-      }
-    }
-    
-    // enhancement: tracking can be choppy. before releasing, consider reimplementing by making the popover's topmost parent window be a child of the content window. (setup may be tricky / brittle over window lifecycles)
-    // deferring until we're sure of the priority of this.
-  }
-  var contentWindowFrameObservation: NSKeyValueObservation!
   
   
   // MARK: - presentation
@@ -87,10 +62,17 @@ open class PopoverController: NSObject {
   // REFACTOR only a size is used.
   open func show(popoverContentRect: CGRect) {
     
+    guard self.popover.window?.isVisible != true else {
+      return
+    }
+    
     // show the popover using the same size as the overlay.
-    self.popover.contentViewController = BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
+    self.popover.contentViewController =
+      self.popover.contentViewController ??
+        BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
+    
     self.popover.contentSize = popoverContentRect.size
-    self.popover.show(relativeTo: .zero, of: anchorView, preferredEdge: .minY)
+    self.popover.show(relativeTo: .zero, of: self.anchorView, preferredEdge: .minY)
     
     // case: when popover content already shown, influence the key window state.
     if let contentWindow = self.popoverContentProvider.window,
@@ -102,11 +84,6 @@ open class PopoverController: NSObject {
   open func hide() {
     self.popover.close()
   }
-  
-  
-  // MARK: - internals
-  
-  let popover = NSPopover()
   
 }
 
@@ -140,11 +117,15 @@ extension PopoverController: NSPopoverDelegate {
   }
   
   public func popoverDidClose(_ notification: Notification) {
-    self.popoverContentProvider.refresh(contentFrame: popoverWindow.frame, display: false)
+    if let frame = self.popoverContentProvider.window?.frame {
+      self.popoverContentProvider.refresh(contentFrame: frame, display: false)
+    }
   }
   
   func setupPopoverWindow() {
-    self.popover.window?.delegate = self
+    
+    // set self as the popover window's delegate, so we can intercept key status and pass on to the content window.
+    self.popoverWindow.delegate = self
     
   }
   
