@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		511EDBE72229E224007070C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511EDBE62229E224007070C3 /* AppDelegate.swift */; };
+		511EDBE92229E224007070C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511EDBE82229E224007070C3 /* ViewController.swift */; };
+		511EDBEB2229E227007070C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 511EDBEA2229E227007070C3 /* Assets.xcassets */; };
+		511EDBEE2229E227007070C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 511EDBEC2229E227007070C3 /* Main.storyboard */; };
+		511EDBF42229E251007070C3 /* BBLPopover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; };
+		511EDBF52229E251007070C3 /* BBLPopover.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		511EDBF92229E255007070C3 /* BBLBasics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */; };
+		511EDBFA2229E255007070C3 /* BBLBasics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 51FA5F5B1FD94FA5009EC3F6 /* BBLBasics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		51D5D4C11F20B6A4004255BC /* BBLPopover.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D5D4B71F20B6A4004255BC /* BBLPopover.framework */; };
 		51D5D4C61F20B6A4004255BC /* BBLPopoverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D5D4C51F20B6A4004255BC /* BBLPopoverTests.swift */; };
 		51D5D4C81F20B6A4004255BC /* BBLPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D5D4BA1F20B6A4004255BC /* BBLPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -15,6 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		511EDBF62229E251007070C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51D5D4AE1F20B6A4004255BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51D5D4B61F20B6A4004255BC;
+			remoteInfo = BBLPopover;
+		};
 		51D5D4C21F20B6A4004255BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 51D5D4AE1F20B6A4004255BC /* Project object */;
@@ -24,7 +39,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		511EDBF82229E251007070C3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				511EDBFA2229E255007070C3 /* BBLBasics.framework in Embed Frameworks */,
+				511EDBF52229E251007070C3 /* BBLPopover.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		511EDBE42229E224007070C3 /* BBLPopoverDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBLPopoverDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		511EDBE62229E224007070C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		511EDBE82229E224007070C3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		511EDBEA2229E227007070C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		511EDBED2229E227007070C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		511EDBEF2229E227007070C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		511EDBF02229E227007070C3 /* BBLPopoverDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BBLPopoverDemo.entitlements; sourceTree = "<group>"; };
 		51D5D4B71F20B6A4004255BC /* BBLPopover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BBLPopover.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51D5D4BA1F20B6A4004255BC /* BBLPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBLPopover.h; sourceTree = "<group>"; };
 		51D5D4BB1F20B6A4004255BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +73,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		511EDBE12229E224007070C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				511EDBF92229E255007070C3 /* BBLBasics.framework in Frameworks */,
+				511EDBF42229E251007070C3 /* BBLPopover.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51D5D4B31F20B6A4004255BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,11 +101,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		511EDBE52229E224007070C3 /* BBLPopoverDemo */ = {
+			isa = PBXGroup;
+			children = (
+				511EDBE62229E224007070C3 /* AppDelegate.swift */,
+				511EDBE82229E224007070C3 /* ViewController.swift */,
+				511EDBEA2229E227007070C3 /* Assets.xcassets */,
+				511EDBEC2229E227007070C3 /* Main.storyboard */,
+				511EDBEF2229E227007070C3 /* Info.plist */,
+				511EDBF02229E227007070C3 /* BBLPopoverDemo.entitlements */,
+			);
+			path = BBLPopoverDemo;
+			sourceTree = "<group>";
+		};
 		51D5D4AD1F20B6A4004255BC = {
 			isa = PBXGroup;
 			children = (
 				51D5D4B91F20B6A4004255BC /* BBLPopover */,
 				51D5D4C41F20B6A4004255BC /* BBLPopoverTests */,
+				511EDBE52229E224007070C3 /* BBLPopoverDemo */,
 				51D5D4B81F20B6A4004255BC /* Products */,
 				51D5D4FA1F20B6C0004255BC /* Frameworks */,
 			);
@@ -70,6 +130,7 @@
 			children = (
 				51D5D4B71F20B6A4004255BC /* BBLPopover.framework */,
 				51D5D4C01F20B6A4004255BC /* BBLPopoverTests.xctest */,
+				511EDBE42229E224007070C3 /* BBLPopoverDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +176,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		511EDBE32229E224007070C3 /* BBLPopoverDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 511EDBF32229E227007070C3 /* Build configuration list for PBXNativeTarget "BBLPopoverDemo" */;
+			buildPhases = (
+				511EDBE02229E224007070C3 /* Sources */,
+				511EDBE12229E224007070C3 /* Frameworks */,
+				511EDBE22229E224007070C3 /* Resources */,
+				511EDBF82229E251007070C3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				511EDBF72229E251007070C3 /* PBXTargetDependency */,
+			);
+			name = BBLPopoverDemo;
+			productName = BBLPopoverDemo;
+			productReference = 511EDBE42229E224007070C3 /* BBLPopoverDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		51D5D4B61F20B6A4004255BC /* BBLPopover */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 51D5D4CB1F20B6A4004255BC /* Build configuration list for PBXNativeTarget "BBLPopover" */;
@@ -157,10 +237,15 @@
 		51D5D4AE1F20B6A4004255BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Big Bear Labs";
 				TargetAttributes = {
+					511EDBE32229E224007070C3 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = XK44TD8U4S;
+						ProvisioningStyle = Automatic;
+					};
 					51D5D4B61F20B6A4004255BC = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = XK44TD8U4S;
@@ -180,6 +265,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 51D5D4AD1F20B6A4004255BC;
 			productRefGroup = 51D5D4B81F20B6A4004255BC /* Products */;
@@ -188,11 +274,21 @@
 			targets = (
 				51D5D4B61F20B6A4004255BC /* BBLPopover */,
 				51D5D4BF1F20B6A4004255BC /* BBLPopoverTests */,
+				511EDBE32229E224007070C3 /* BBLPopoverDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		511EDBE22229E224007070C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				511EDBEB2229E227007070C3 /* Assets.xcassets in Resources */,
+				511EDBEE2229E227007070C3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51D5D4B51F20B6A4004255BC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -210,6 +306,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		511EDBE02229E224007070C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				511EDBE92229E224007070C3 /* ViewController.swift in Sources */,
+				511EDBE72229E224007070C3 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51D5D4B21F20B6A4004255BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +334,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		511EDBF72229E251007070C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51D5D4B61F20B6A4004255BC /* BBLPopover */;
+			targetProxy = 511EDBF62229E251007070C3 /* PBXContainerItemProxy */;
+		};
 		51D5D4C31F20B6A4004255BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 51D5D4B61F20B6A4004255BC /* BBLPopover */;
@@ -236,7 +346,67 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		511EDBEC2229E227007070C3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				511EDBED2229E227007070C3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		511EDBF12229E227007070C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = BBLPopoverDemo/BBLPopoverDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XK44TD8U4S;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = BBLPopoverDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bigbearlabs.BBLPopoverDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		511EDBF22229E227007070C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = BBLPopoverDemo/BBLPopoverDemo.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XK44TD8U4S;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = BBLPopoverDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bigbearlabs.BBLPopoverDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 		51D5D4C91F20B6A4004255BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -355,7 +525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = XK44TD8U4S;
@@ -382,7 +552,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = XK44TD8U4S;
@@ -435,6 +605,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		511EDBF32229E227007070C3 /* Build configuration list for PBXNativeTarget "BBLPopoverDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				511EDBF12229E227007070C3 /* Debug */,
+				511EDBF22229E227007070C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		51D5D4B11F20B6A4004255BC /* Build configuration list for PBXProject "BBLPopover" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
