@@ -6,7 +6,6 @@ import BBLBasics
 @objc
 public protocol PopoverContentProvider {
   
-  @objc
   var window: NSWindow? { get }
   
   func refresh(contentFrame: NSRect, display: Bool)
@@ -172,8 +171,10 @@ extension PopoverController: NSWindowDelegate {
   
   // prevent the popover window from coming above the overlay window.
   public func windowDidBecomeKey(_ notification: Notification) {
-    print("\(self): handing over key status to the content wc.")
-    self.popoverContentProvider.window?.makeKeyAndOrderFront(self)
+    if (notification.object as? NSWindow) === self.popover.window {
+      print("\(self): handing over key status to the content wc.")
+      self.popoverContentProvider.window?.makeKeyAndOrderFront(self)
+    }
   }
   
 }
