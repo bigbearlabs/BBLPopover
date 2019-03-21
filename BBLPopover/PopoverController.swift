@@ -24,7 +24,11 @@ open class PopoverController: NSObject {
   var popoverContentProvider: PopoverContentProvider!
 
   
-  let popover = NSPopover()
+  lazy var popover: NSPopover = {
+    let popover = NSPopover()
+    popover.animates = false
+    return popover
+  }()
   
   @objc dynamic
   open lazy var popoverWindow: NSWindow = {
