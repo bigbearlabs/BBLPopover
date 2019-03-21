@@ -57,8 +57,23 @@ open class PopoverController: NSObject {
     super.init()
     
     self.popover.delegate = self
+    
+    // on content provider window resize, update popover window size.
+    _ = self.windowResizeObservation
   }
   
+  lazy var windowResizeObservation: Any = {
+    NotificationCenter.default.addObserver(forName: NSWindow.didResizeNotification, object: nil, queue: nil) { [unowned self] notification in
+      if let window = notification.object as? NSWindow,
+        window === self.popoverContentProvider.window {
+        self.popoverWindow.setFrame(window.frame, display: window.isVisible)
+      }
+    }
+  }()
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self.windowResizeObservation)
+  }
   
   
   // MARK: - presentation
