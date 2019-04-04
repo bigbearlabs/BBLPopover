@@ -127,8 +127,9 @@ extension PopoverController: NSPopoverDelegate {
 
       self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!, display: true)
       
-      // make popover window a child of the content provider's window.
       self.popoverWindow.addChildWindow(self.popoverContentProvider.window!, ordered: .above)
+      // make content provider's window a child window of the popover window,
+      // so it follows the popover.
       
     }
     
