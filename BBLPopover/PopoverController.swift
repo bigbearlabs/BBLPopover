@@ -65,7 +65,7 @@ open class PopoverController: NSObject {
     NotificationCenter.default.addObserver(forName: NSWindow.didResizeNotification, object: nil, queue: nil) { [unowned self] notification in
       if let window = notification.object as? NSWindow,
         window === self.popoverContentProvider.window {
-        self.popoverWindow.setFrame(window.frame, display: window.isVisible)
+        self.popover.window?.setFrame(window.frame, display: window.isVisible)
       }
     }
   }()
