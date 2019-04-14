@@ -249,7 +249,7 @@
 					51D5D4B61F20B6A4004255BC = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = XK44TD8U4S;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					51D5D4BF1F20B6A4004255BC = {
@@ -543,7 +543,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -568,7 +568,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigbearlabs.BBLPopover;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
