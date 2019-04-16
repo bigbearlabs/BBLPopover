@@ -78,7 +78,7 @@ open class PopoverController: NSObject {
   // MARK: - presentation
   
   // REFACTOR only a size is used.
-  open func show(popoverContentRect: CGRect) {
+  open func show(popoverContentRect: CGRect, positioningRect: CGRect? = nil) {
     
     guard self.popover.window?.isVisible != true else {
       return
@@ -90,7 +90,7 @@ open class PopoverController: NSObject {
         BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
     
     self.popover.contentSize = popoverContentRect.size
-    self.popover.show(relativeTo: .zero, of: self.anchorView, preferredEdge: .minY)
+    self.popover.show(relativeTo: positioningRect ?? .zero, of: self.anchorView, preferredEdge: .minY)
     
     // case: when popover content already shown, influence the key window state.
     if let contentWindow = self.popoverContentProvider.window,
