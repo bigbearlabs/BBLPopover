@@ -2,6 +2,10 @@ import Foundation
 import BBLBasics
 
 
+/// limitations:
+/// NSPopover does not always show the popover on the preferred edge of the anchor view, if space is tight. this can result in having to choose between the popover obscuring critical controls, or having the disclosure triangle positioned in an awkward location.
+/// notes:
+/// consider re-implementing using github/SFBPopovers since it allows more control over disclosure triangle location et.
 
 @objc
 public protocol PopoverContentProvider {
@@ -78,7 +82,11 @@ open class PopoverController: NSObject {
   // MARK: - presentation
   
   // REFACTOR only a size is used.
-  open func show(popoverContentRect: CGRect, positioningRect: CGRect? = nil) {
+  open func show(
+    popoverContentRect: CGRect,
+    positioningRect: CGRect = .zero,
+    preferredEdge: NSRectEdge = .minY)
+  {
     
     guard self.popover.window?.isVisible != true else {
       return
@@ -90,7 +98,7 @@ open class PopoverController: NSObject {
         BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
     
     self.popover.contentSize = popoverContentRect.size
-    self.popover.show(relativeTo: positioningRect ?? .zero, of: self.anchorView, preferredEdge: .minY)
+    self.popover.show(relativeTo: positioningRect, of: self.anchorView, preferredEdge: preferredEdge)
     
     // case: when popover content already shown, influence the key window state.
     if let contentWindow = self.popoverContentProvider.window,
