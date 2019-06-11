@@ -26,6 +26,7 @@ open class PopoverController: NSObject {
   @objc dynamic weak
   var popoverContentProvider: PopoverContentProvider!
 
+  let onShow: (PopoverController) -> Void
   
   lazy var popover: NSPopover = {
     let popover = NSPopover()
@@ -53,9 +54,13 @@ open class PopoverController: NSObject {
     )
   }
   
-  public init(anchorView: NSView, popoverContentProvider: PopoverContentProvider) {
+  public init(anchorView: NSView, popoverContentProvider: PopoverContentProvider,
+              onShow: @escaping (PopoverController) -> Void
+    ) {
     self.anchorView = anchorView
     self.popoverContentProvider = popoverContentProvider
+    
+    self.onShow = onShow
     
     super.init()
     
@@ -122,6 +127,9 @@ extension PopoverController: NSPopoverDelegate {
     
     // this is the first chance to set up the popover's window, as previously it might not have been instantiated.
     self.setupPopoverWindow()
+    
+    // * call the handler.
+    onShow(self)
     
     // * update content provider frame to match popover.
     
