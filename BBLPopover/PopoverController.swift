@@ -41,7 +41,7 @@ open class PopoverController: NSObject {
     }
 
     // for first-time access, show with a zero content rect to initialise popover.window.
-    self.show(popoverContentRect: .zero)
+    self.show(popoverContentSize: .zero)
 
     return self.popover.window!
   }()
@@ -88,7 +88,7 @@ open class PopoverController: NSObject {
   
   // REFACTOR only a size is used.
   open func show(
-    popoverContentRect: CGRect,
+    popoverContentSize: CGSize,
     positioningRect: CGRect = .zero,
     preferredEdge: NSRectEdge = .minY)
   {
@@ -100,9 +100,9 @@ open class PopoverController: NSObject {
     // show the popover using the same size as the overlay.
     self.popover.contentViewController =
       self.popover.contentViewController ??
-        BlankViewController(frame: CGRect(origin: .zero, size: popoverContentRect.size))
+        BlankViewController(frame: CGRect(origin: .zero, size: popoverContentSize))
     
-    self.popover.contentSize = popoverContentRect.size
+    self.popover.contentSize = popoverContentSize
     self.popover.show(relativeTo: positioningRect, of: self.anchorView, preferredEdge: preferredEdge)
     
     // case: when popover content already shown, influence the key window state.
