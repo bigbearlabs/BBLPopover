@@ -88,11 +88,15 @@ open class PopoverController: NSObject {
   
   // REFACTOR only a size is used.
   open func show(
-    popoverContentSize: CGSize,
+    popoverContentSize: CGSize? = nil,
     positioningRect: CGRect = .zero,
     preferredEdge: NSRectEdge = .minY)
   {
     
+    let popoverContentSize = popoverContentSize
+      ?? popoverContentProvider.window!.frame.size
+//      newContentSize = self.contentWindowController.window!.frame.size
+
     guard self.popover.window?.isVisible != true else {
       return
     }
