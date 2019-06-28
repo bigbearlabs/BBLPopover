@@ -57,9 +57,25 @@ class MyPopoverContentProvider: NSObject, PopoverContentProvider {
     return NSWindow(contentViewController: contentVc)
   }()
   
-  func refresh(contentFrame: NSRect, display: Bool) {
-    self.window?.setIsVisible(display)
+  var frame: CGRect? {
+    get {
+      return self.window?.frame
+    }
+    set {
+      guard let frame = newValue else {
+        fatalError()
+      }
+      self.window!.frame = frame
+    }
   }
   
+  var isVisible: Bool {
+    get {
+      return self.window?.isVisible ?? false
+    }
+    set {
+      self.window!.setIsVisible(newValue)
+    }
+  }
   
 }

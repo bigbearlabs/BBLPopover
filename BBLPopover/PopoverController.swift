@@ -7,12 +7,13 @@ import BBLBasics
 /// notes:
 /// consider re-implementing using github/SFBPopovers since it allows more control over disclosure triangle location et.
 
-@objc
-public protocol PopoverContentProvider {
+public protocol PopoverContentProvider: class {
   
   var window: NSWindow? { get }
   
-  func refresh(contentFrame: NSRect, display: Bool)
+  var frame: CGRect? { get set }
+
+  var isVisible: Bool { get set }
 }
 
 
@@ -23,7 +24,7 @@ open class PopoverController: NSObject {
   
   let anchorView: NSView
   
-  @objc dynamic weak
+  dynamic weak
   var popoverContentProvider: PopoverContentProvider!
 
   let onShow: (PopoverController) -> Void
@@ -71,6 +72,7 @@ open class PopoverController: NSObject {
   }
   
   lazy var windowResizeObservation: Any = {
+    // update popover window frame to match content provider window.
     NotificationCenter.default.addObserver(forName: NSWindow.didResizeNotification, object: nil, queue: nil) { [unowned self] notification in
       if let window = notification.object as? NSWindow,
         window === self.popoverContentProvider.window {
@@ -90,16 +92,14 @@ open class PopoverController: NSObject {
   open func show(
     popoverContentSize: CGSize? = nil,
     positioningRect: CGRect = .zero,
-    preferredEdge: NSRectEdge = .minY)
-  {
+    preferredEdge: NSRectEdge = .minY) {
     
-    let popoverContentSize = popoverContentSize
-      ?? popoverContentProvider.window!.frame.size
-//      newContentSize = self.contentWindowController.window!.frame.size
-
     guard self.popover.window?.isVisible != true else {
       return
     }
+
+    let popoverContentSize = popoverContentSize
+      ?? popoverContentProvider.window!.frame.size
     
     // show the popover using the same size as the overlay.
     self.popover.contentViewController =
@@ -117,7 +117,11 @@ open class PopoverController: NSObject {
   }
   
   open func hide() {
-    self.popover.close()
+    if self.popover.isShown {
+      self.popover.close()
+    } else {
+      self.popoverContentProvider.isVisible = false
+    }
   }
   
 }
@@ -135,30 +139,21 @@ extension PopoverController: NSPopoverDelegate {
     // * call the handler.
     onShow(self)
     
-    // * update content provider frame to match popover.
-    
-    // give the popover size some room to settle.
-    execOnMainAsync {
-      
-      // DEV prevent the popover from obscuring the screen when breakpoint is hit.
-      if UserDefaults.standard.bool(forKey: "debug.devInfo") == true {
-        self.popoverWindow.level = NSWindow.Level.normal
-      }
-
-      self.popoverContentProvider.refresh(contentFrame: self.popoverContentFrame!, display: true)
-      
-      self.popoverWindow.addChildWindow(self.popoverContentProvider.window!, ordered: .above)
-      // make content provider's window a child window of the popover window,
-      // so it follows the popover.
-      
+    // DEV prevent the popover from obscuring the screen when breakpoint is hit.
+    if UserDefaults.standard.bool(forKey: "debug.devInfo") == true {
+      self.popoverWindow.level = NSWindow.Level.normal
     }
     
+    // * update content provider frame to match popover.
+    self.popoverContentProvider.frame = self.popoverContentFrame!
+    
+    // make content provider's window a child window of the popover window,
+    // so it follows the popover.
+    self.popoverWindow.addChildWindow(self.popoverContentProvider.window!, ordered: .above)
   }
   
   public func popoverDidClose(_ notification: Notification) {
-    if let frame = self.popoverContentProvider.window?.frame {
-      self.popoverContentProvider.refresh(contentFrame: frame, display: false)
-    }
+    self.popoverContentProvider.isVisible = false
   }
   
   func setupPopoverWindow() {
